@@ -25,17 +25,17 @@ pipeline {
       }
 
     stage('Static Code Analysis'){
-        // environment {
-          //  SONAR_URL = "http://192.168.100.58:9000"
-        // }
+          environment {
+            SONAR_URL = "http://192.168.100.58:9000"
+          }
           steps {
-            sh "echo By Passed"
-          //  withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-          //   sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+           // sh "echo By Passed"
+            withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+             sh 'cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
             }
           }
 
-        // }
+         }
       
     stage('Build and Push Docker Image') {
             environment{DOCKERHUB_CREDENTIALS = credentials('docker-cred')}  
