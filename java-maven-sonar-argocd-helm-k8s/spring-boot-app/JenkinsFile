@@ -46,7 +46,7 @@ pipeline {
 
     stage('Update Deployment File') {
               environment {
-                  GIT_REPO_NAME = "manifest"
+                  GIT_REPO_NAME = "maven3"
                   GIT_USER_NAME = "mrmarga"
                 }
 
@@ -56,9 +56,9 @@ pipeline {
                     git config user.email "margaghale31@gmail.com" \
                     git config user.name "mrmarga" \
                     BUILD_NUMBER=${BUILD_NUMBER} \
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" main/manifest.yml \
-                    git add main/manifest.yml \
-                    git commit -m "Update deployment image to version ${BUILD_NUMBER}" \
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
                 }
